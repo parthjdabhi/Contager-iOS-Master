@@ -29,13 +29,18 @@ class NoteViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         // Do any additional setup after loading the view.
         self.searchBar.delegate = self
-        self.tableView.allowsSelection = false
+        //self.tableView.allowsSelection = false
         self.tableView.dataSource = self
         self.tableView.delegate = self
+        
+        let myGroup = dispatch_group_create()
         
         ref = FIRDatabase.database().reference()
         let userID = FIRAuth.auth()?.currentUser?.uid
         let noteRef = ref.child("users").child(userID!).child("notes")
+        
+        CommonUtils.sharedUtils.showProgress(self.view, label: "Loading...")
+        dispatch_group_enter(myGroup)
         noteRef.observeEventType(.Value, withBlock: { (snapshot) in
             self.noteArr.removeAll()
             self.filtered.removeAll()
@@ -44,6 +49,7 @@ class NoteViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 let snap = childSnap as! FIRDataSnapshot
                 let dic = snap.value as! [String : String]
                 for (key, value) in dic {
+                    dispatch_group_enter(myGroup)
                     self.ref.child("users").child(key).observeSingleEventOfType(.Value, withBlock: { (snap) in
                         if snap.exists()
                         {
@@ -88,19 +94,22 @@ class NoteViewController: UIViewController, UITableViewDataSource, UITableViewDe
                                 let noteData = NoteData(user: userData, note: value)
                                 self.noteArr.append(noteData)
                             }
-                            
-                            
                             self.tableView.reloadData()
                         }
+                        dispatch_group_leave(myGroup)
                     })
                 }
-                
             }
+            dispatch_group_leave(myGroup)
         }) { (error) in
             print(error.localizedDescription)
+            dispatch_group_leave(myGroup)
         }
         
-        CommonUtils.sharedUtils.showProgress(self.view, label: "Loading...")
+        dispatch_group_notify(myGroup,  dispatch_get_main_queue()) {
+            CommonUtils.sharedUtils.hideProgress()
+        }
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -143,6 +152,7 @@ class NoteViewController: UIViewController, UITableViewDataSource, UITableViewDe
         filtered = noteArr.filter { note in
             return note.getNote().lowercaseString.containsString(searchText.lowercaseString)
         }
+        
         if searchText  == ""{
             self.searchActive = false
         }
@@ -202,7 +212,22 @@ class NoteViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return cell
     }
     
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        CommonUtils.sharedUtils.hideProgress()
+//    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+//        CommonUtils.sharedUtils.hideProgress()
+//    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    {
+        print("Index Path: ", indexPath.row)
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        let noteData = noteArr[indexPath.row]
+        let friend = noteData.getUser()
+        let note = noteData.getNote()
+        
+        AppState.sharedInstance.friend = friend
+        
+        let vc = self.storyboard?.instantiateViewControllerWithIdentifier("FriendPortalViewController") as! FriendPortalViewController!
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }

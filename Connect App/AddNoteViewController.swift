@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class AddNoteViewController: UIViewController, UITextFieldDelegate {
+class AddNoteViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     
     var ref: FIRDatabaseReference!
     static var selectedUserID: String?
@@ -18,13 +18,16 @@ class AddNoteViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var mytex : UITextField!
     @IBOutlet weak var nameNoteLabel: UILabel!
     @IBOutlet weak var image: UIImageView!
- 
+    
+    @IBOutlet weak var svContent: UIScrollView!
+    @IBOutlet weak var viewContent: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 //        self.mytex.delegate = self;
         //print("selectedUserID: \(selectedUserID)")
         ref = FIRDatabase.database().reference()
+        noteField.delegate = self
         
         if let friend = AppState.sharedInstance.friend {
             self.nameNoteLabel.textColor = UIColor.whiteColor()
@@ -51,6 +54,22 @@ class AddNoteViewController: UIViewController, UITextFieldDelegate {
     
     override func  preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
+    }
+    
+    func textViewDidBeginEditing(textField: UITextView) {
+        self.svContent.setContentOffset(CGPointMake(0, 200), animated: true)
+    }
+    
+    func textViewDidEndEditing(textField: UITextView) {
+        self.svContent.setContentOffset(CGPointZero, animated: true)
+    }
+    
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.endEditing(true)
+            return false
+        }
+        return true
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {

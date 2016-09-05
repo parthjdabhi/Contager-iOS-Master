@@ -7,13 +7,15 @@
 //
 
 import Foundation
-struct UserData {
+struct UserData
+{
     var userName: String?
     var photoURL: String?
     var uid: String?
     var image: UIImage?
     var email: String?
     var noImage: Bool?
+    
     // Mark: Init
     init(let userName: String, let photoURL: String, let uid: String, let image: UIImage, let email: String, let noImage: Bool) {
         self.userName = userName
