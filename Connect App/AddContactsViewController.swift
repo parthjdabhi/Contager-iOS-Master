@@ -9,6 +9,8 @@
 import UIKit
 import Firebase
 import SDWebImage
+import Alamofire
+
 class AddContactsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
     var ref:FIRDatabaseReference!
@@ -204,11 +206,32 @@ class AddContactsViewController: UIViewController, UITableViewDataSource, UITabl
             let userID = FIRAuth.auth()?.currentUser?.uid
             friendRequestRef.setValue(userID)
             
+
+            
+            ref.child("users").child(uid).child("userInfo").observeSingleEventOfType(.Value, withBlock: {(snapshot: FIRDataSnapshot) -> Void in
+                
+                let userInfo = snapshot.valueInExportFormat() as? NSMutableDictionary ?? NSMutableDictionary()
+                let token = userInfo["deviceToken"] as? String ?? ""
+                
+                if token.characters.count > 1 {
+                    
+                    Alamofire.request(.GET, "http://www.unitedpeoplespower.com/api/notifications.php", parameters: ["token": token,"message":"You have a friend request!","type":"friendRequest","data":"friendRequest"])
+                        .responseJSON { response in
+                            switch response.result {
+                            case .Success:
+                                print("Notification sent successfully")
+                            case .Failure(let error):
+                                print(error)
+                            }
+                    }
+                    
+                }
+            })
         }
-        
+ 
         return cell
     }
-    
+ 
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         CommonUtils.sharedUtils.hideProgress()
     }    

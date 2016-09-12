@@ -160,19 +160,21 @@ class FirebaseSignInViewController: UIViewController {
                                 facebookData["gender"] = result.valueForKey("gender") as? String ?? ""
                                 facebookData["email"] = result.valueForKey("email") as? String ?? ""
                                 
+                                if let picture = result.objectForKey("picture") {
+                                    if let pictureData = picture.objectForKey("data"){
+                                        if let pictureURL = pictureData.valueForKey("url") as? String {
+                                            print(pictureURL)
+                                            facebookData["profilePhotoURL"] = pictureURL
+                                        }
+                                    }
+                                }
+                                
                                 print("Facebook Integration Data : \(facebookData)")
                                 
                                 //userDetail["fbId"] = self.fbId
                                 
                                 self.ref.child("users").child(user!.uid).setValue(["facebookData": facebookData, "fbId" :result.valueForKey("id") as? String ?? "", "userFirstName": result.valueForKey("first_name") as? String ?? "", "userLastName": result.valueForKey("last_name") as? String ?? "", "email": result.valueForKey("email") as? String ?? ""])
-                                if let picture = result.objectForKey("picture") {
-                                    if let pictureData = picture.objectForKey("data"){
-                                        if let pictureURL = pictureData.valueForKey("url") {
-                                            print(pictureURL)
-                                            self.ref.child("users").child(user!.uid).child("facebookData").child("profilePhotoURL").setValue(pictureURL)
-                                        }
-                                    }
-                                }
+                                
                                 let mainScreenViewController = self.storyboard?.instantiateViewControllerWithIdentifier("MainScreenViewController") as! MainScreenViewController!
                                 self.navigationController?.pushViewController(mainScreenViewController, animated: true)
                             }

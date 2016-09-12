@@ -153,6 +153,26 @@ class InboxViewController: UIViewController ,UITableViewDataSource, UITableViewD
             
             self.userArry.removeAtIndex(indexPath.row)
             self.tableView.reloadData()
+            
+//            FIRDatabase.database().reference().child("users").child(fid).child("userInfo").observeSingleEventOfType(.Value, withBlock: {(snapshot: FIRDataSnapshot) -> Void in
+//                
+//                let userInfo = snapshot.valueInExportFormat() as? NSMutableDictionary ?? NSMutableDictionary()
+//                let token = userInfo["deviceToken"] as? String ?? ""
+//                
+//                if token.characters.count > 1 {
+//                    
+//                    Alamofire.request(.GET, "http://www.unitedpeoplespower.com/api/notifications.php", parameters: ["token": token,"message":"Your friend is accepted!","type":"friendRequest","data":"friendRequest"])
+//                        .responseJSON { response in
+//                            switch response.result {
+//                            case .Success:
+//                                print("Notification sent successfully")
+//                            case .Failure(let error):
+//                                print(error)
+//                            }
+//                    }
+//                    
+//                }
+//            })
         }
         
         cell.onDeclineButtonTapped = {

@@ -296,6 +296,8 @@ class SignUpSocialViewController: UIViewController {
                         userDetail["linkedinId"] = self.linkedinId
                     }
                     
+                    userDetail["deviceToken"] = NSUserDefaults.standardUserDefaults().objectForKey("deviceToken") as? String ?? ""
+                    
                     print("userDetail : \(userDetail)")
                     
                     self.ref.child("users").child(user!.uid).setValue(userDetail)

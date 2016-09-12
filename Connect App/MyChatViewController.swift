@@ -149,7 +149,6 @@ class MyChatViewController: JSQMessagesViewController {
         print("Report user")
     }
     
-    
     override func didReceiveMenuWillShowNotification(notification: NSNotification!) {
         //let menu:UIMenuController? = notification.object as? UIMenuController
         //menu?.menuItems = [UIMenuItem(title: "Block", action: #selector(MyChatViewController.spam(_:)))]
@@ -327,7 +326,7 @@ class MyChatViewController: JSQMessagesViewController {
                 let message = "message Id : \(self.groupId ?? "") \n Message Text: \(text) Email  : \(email) (\(name)) \nSent By : \(self.senderId) on \(date) \nBlock Requset Sent by : \(FIRAuth.auth()?.currentUser?.uid ?? "") \n Reported on \(NSDate.init()) for personal chat"
 
                 //support@unitedpeoplespower.com
-                Alamofire.request(.GET, "http://www.unitedpeoplespower.com/contagerapp/api/reportUser.php", parameters: ["from": email ,"subject":"Request to block user in personal chat","message":message])
+                Alamofire.request(.GET, "http://www.unitedpeoplespower.com/api/reportUser.php", parameters: ["from": email ,"subject":"Request to block user in personal chat","message":message])
                     .responseJSON { response in
                         debugPrint(response.result.value)
                         var msg = ""
@@ -342,7 +341,6 @@ class MyChatViewController: JSQMessagesViewController {
                         sendMailErrorAlert.show()
                 }
             })
-            
         }
     }
     
@@ -397,7 +395,6 @@ class MyChatViewController: JSQMessagesViewController {
         //self.jsqmessages.append(jsqMsg)
         //messages.append(messages)
         
-        
         ref.child(FMESSAGE_PATH).child(self.groupId!).childByAutoId().updateChildValues(message) { (error, FIRDBRef) in
             if error == nil {
                 print("saved recent object : \(message)")
@@ -405,6 +402,24 @@ class MyChatViewController: JSQMessagesViewController {
                 print("Failed to save recent object : \(message)")
             }
         }
+        
+        ref.child("users").child(OppUserId!).child("userInfo").observeSingleEventOfType(.Value, withBlock: {(snapshot: FIRDataSnapshot) -> Void in
+            
+            let userInfo = snapshot.valueInExportFormat() as? NSMutableDictionary ?? NSMutableDictionary()
+            let token = userInfo["deviceToken"] as? String ?? ""
+            
+            if token.characters.count > 1 {
+                Alamofire.request(.GET, "http://www.unitedpeoplespower.com/api/notifications.php", parameters: ["token": token,"message":"You have a new message!","type":"newMessage","data":"newMessage"])
+                    .responseJSON { response in
+                        switch response.result {
+                        case .Success:
+                            print("Notification sent successfully")
+                        case .Failure(let error):
+                            print(error)
+                        }
+                }
+            }
+        })
         
         self.collectionView?.reloadData()
         JSQSystemSoundPlayer.jsq_playMessageSentSound()

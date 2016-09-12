@@ -79,15 +79,25 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
                         print("Error: \(error)")
                     } else {
                         print("fetched user: \(result)")
-                        self.ref.child("users").child(self.user!.uid).child("facebookData").setValue(["userFirstName": result.valueForKey("first_name") as! String!, "userLastName": result.valueForKey("last_name") as! String!, "gender": result.valueForKey("gender") as! String!, "email": result.valueForKey("email") as! String!])
+                        var facebookData = Dictionary<String, String>()
+                        facebookData["userId"] = result.valueForKey("id") as? String ?? ""
+                        facebookData["userFirstName"] = result.valueForKey("first_name") as? String ?? ""
+                        facebookData["userLastName"] = result.valueForKey("last_name") as? String ?? ""
+                        facebookData["gender"] = result.valueForKey("gender") as? String ?? ""
+                        facebookData["email"] = result.valueForKey("email") as? String ?? ""
+                        
                         if let picture = result.objectForKey("picture") {
                             if let pictureData = picture.objectForKey("data"){
-                                if let pictureURL = pictureData.valueForKey("url") {
+                                if let pictureURL = pictureData.valueForKey("url") as? String {
                                     print(pictureURL)
-                                    self.ref.child("users").child(self.user!.uid).child("facebookData").child("profilePhotoURL").setValue(pictureURL)
+                                    facebookData["profilePhotoURL"] = pictureURL
                                 }
                             }
                         }
+                        
+                        print("Facebook Integration Data : \(facebookData)")
+                        //userDetail["fbId"] = self.fbId
+                        self.ref.child("users").child(self.user!.uid).setValue(["facebookData": facebookData, "fbId" :result.valueForKey("id") as? String ?? ""])
                         self.facebook.titleLabel?.text = "Facebook Added"
                     }
                 })

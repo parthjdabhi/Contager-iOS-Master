@@ -88,6 +88,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
                      didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         print(deviceToken)
         FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: FIRInstanceIDAPNSTokenType.Sandbox)
+        
+        let tokenChars = UnsafePointer<CChar>(deviceToken.bytes)
+        var tokenString = ""
+        
+        for i in 0..<deviceToken.length {
+            tokenString += String(format: "%02.2hhx", arguments: [tokenChars[i]])
+        }
+        
+        NSUserDefaults.standardUserDefaults().setObject(tokenString, forKey: "deviceToken")
+        NSUserDefaults.standardUserDefaults().synchronize()
+        //Parth Device : 25229d664e272484a11dc71519ea6d31959614a689adec3bd4e2f00abe69803c
+        print("Device Token:", tokenString)
+        
+        if let user = FIRAuth.auth()?.currentUser
+        {
+            let data = ["deviceToken": tokenString]
+            FIRDatabase.database().reference().child("users").child(user.uid).child("userInfo").updateChildValues(data)
+        }
     }
     
     func connectToFcm() {
