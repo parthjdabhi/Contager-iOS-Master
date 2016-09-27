@@ -54,6 +54,16 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>IQDropDownTextField.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>IQKeyboardManagerSwift.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>InstagramKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -94,6 +104,21 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SVProgressHUD.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>SwiftyJSON.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>UIActivityIndicator-for-SDWebImage.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>UICKeyChainStore.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -103,6 +128,11 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>0EB19C1377A747F81110D44E2D5FCF78</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1520003FEBEC114D6C84F832AFEDB994</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -117,6 +147,16 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>272BD36161F9F9ACD7844395B83D11DE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>293273752FC63EC2A1C404F154EB9FF9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>30943B25F0DEC51D0012EB94E0670356</key>
 		<dict>
 			<key>primary</key>
@@ -127,7 +167,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>45935B91DF0442390E2CA6DEEF68AE99</key>
+		<key>3511258FF1DED3401C4B456024D5FA41</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3A83EAC18074A77A8DA7CA51A8DC7A90</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -147,6 +192,11 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>5D317FC53E3C4BD59898643C01B2164B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>6C93DE13A9E39F5C57B693BE90DBB2D0</key>
 		<dict>
 			<key>primary</key>
@@ -162,27 +212,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>89A2412A79F3347E5D320184821598C2</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>8EFE724FDDAA2478F44F082C05BA272C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A00FBD782273A154FCEA6D1595FDBACB</key>
+		<key>939B0929CF9E44E13CB2F0F8D82C0BB3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>AFA2A72D3F7911AA09AF6C4A1CBB49BC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>BA14B622689766F6B8A4F42FD9DE552F</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C8B78D489EC1678E343E3E65AE76EDB7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -193,6 +238,11 @@
 			<true/>
 		</dict>
 		<key>D5C941D09578818BBD92C6320EB2435B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F1FF01E86CAFAA03EEA929AF8DC1CF16</key>
 		<dict>
 			<key>primary</key>
 			<true/>

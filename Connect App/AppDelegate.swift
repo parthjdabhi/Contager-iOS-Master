@@ -17,6 +17,7 @@ import TwitterKit
 import Firebase
 import OAuthSwift
 import Batch
+import WebKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
@@ -81,6 +82,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             self.window?.rootViewController = navSiginin
         }
         
+        
+        let dataTypes = Set([WKWebsiteDataTypeCookies,
+            WKWebsiteDataTypeLocalStorage, WKWebsiteDataTypeSessionStorage,
+            WKWebsiteDataTypeWebSQLDatabases, WKWebsiteDataTypeIndexedDBDatabases])
+        WKWebsiteDataStore.defaultDataStore().removeDataOfTypes(dataTypes, modifiedSince: NSDate.distantPast(), completionHandler: {})
+        
+        let storage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
+        if let cookies = storage.cookies {
+            for cookie in cookies {
+                storage.deleteCookie(cookie)
+            }
+        }
+        
+        let dateStore = WKWebsiteDataStore.defaultDataStore()
+        dateStore.fetchDataRecordsOfTypes(WKWebsiteDataStore.allWebsiteDataTypes()) { (records) in
+            for record in records {
+                print("displayName",record.displayName)
+                dateStore.removeDataOfTypes(record.dataTypes, forDataRecords: [record], completionHandler: {
+                    print("Cookies for ",record.displayName," deleted successfully")
+                })
+            }
+        }
+        
+        let libraryPath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, NSSearchPathDomainMask.UserDomainMask , true)
+        let cookiesFolderPath = "\(libraryPath)/Cookies"
+        
+        let errors = try? NSFileManager.defaultManager().removeItemAtPath(cookiesFolderPath)
+                
         return true
     }
     
@@ -126,6 +155,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     
     func applicationHandleOpenURL(url: NSURL) {
         
+        print("url: ",url)
+        
         if (url.host == "oauth-callback") {
             OAuthSwift.handleOpenURL(url)
         } else {
@@ -143,6 +174,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     }
     
     func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
+        
+        print(" openURL : ",url,"option : ",options)
+        
         applicationHandleOpenURL(url)
         return FBSDKApplicationDelegate.sharedInstance().application(
             app,

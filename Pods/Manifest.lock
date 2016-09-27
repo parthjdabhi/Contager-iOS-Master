@@ -14,7 +14,7 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
-  - Alamofire (3.4.1)
+  - Alamofire (3.5.0)
   - Batch (1.5.4)
   - Bolts (1.7.0):
     - Bolts/AppLinks (= 1.7.0)
@@ -109,21 +109,27 @@ PODS:
   - InstagramKit/UICKeyChainStore (3.8):
     - AFNetworking (~> 3.0)
     - UICKeyChainStore (~> 2.0)
+  - IQDropDownTextField (1.1.0)
+  - IQKeyboardManagerSwift (4.0.5)
   - JSQMessagesViewController (7.3.4):
     - JSQSystemSoundPlayer (~> 2.0.1)
   - JSQSystemSoundPlayer (2.0.1)
   - Mixpanel (3.0.0):
     - Mixpanel/Mixpanel (= 3.0.0)
   - Mixpanel/Mixpanel (3.0.0)
-  - OAuthSwift (0.5.2)
+  - OAuthSwift (0.6.0)
   - QRCode (0.5)
   - SDWebImage (3.8.1):
     - SDWebImage/Core (= 3.8.1)
   - SDWebImage/Core (3.8.1)
+  - SVProgressHUD (2.0.3)
+  - SwiftyJSON (2.3.2)
   - TwitterCore (2.3.0):
     - Fabric
   - TwitterKit (2.3.0):
     - TwitterCore (= 2.3.0)
+  - UIActivityIndicator-for-SDWebImage (1.2):
+    - SDWebImage (~> 3.7)
   - UICKeyChainStore (2.1.0)
 
 DEPENDENCIES:
@@ -145,17 +151,22 @@ DEPENDENCIES:
   - GTMOAuth2 (~> 1.1.0)
   - InstagramKit (~> 3.0)
   - InstagramKit/UICKeyChainStore
+  - IQDropDownTextField (~> 1.0)
+  - IQKeyboardManagerSwift
   - JSQMessagesViewController (~> 7.3)
   - Mixpanel
-  - OAuthSwift (~> 0.5.0)
+  - OAuthSwift (~> 0.6)
   - QRCode (~> 0.5)
   - SDWebImage (~> 3.8)
+  - SVProgressHUD (~> 2.0)
+  - SwiftyJSON (~> 2.3)
   - TwitterCore
   - TwitterKit
+  - UIActivityIndicator-for-SDWebImage (~> 1.2)
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
-  Alamofire: 01a82e2f6c0f860ade35534c8dd88be61bdef40c
+  Alamofire: b70a7352335f8ea5babd0a923eb7e8eacc67b877
   Batch: 13083f81837fe1da9ea84b0533a2965c73ff74c6
   Bolts: a0058fa3b331c5a1e4402d534f2dae36dbff31e4
   Crashlytics: 130ab943f8c78cda7a814b434f270b2e2c8a3cba
@@ -182,16 +193,21 @@ SPEC CHECKSUMS:
   GTMOAuth2: bdb12f3e0d2110bfe585f6151230b883beb4d042
   GTMSessionFetcher: 174bc61d5238f81f9ddb807b0b0170420f67de85
   InstagramKit: 402d6bba375357b548039de08eea19a1b8716354
+  IQDropDownTextField: 614f79ca905529c992045eaa112d0fc9ebb875d1
+  IQKeyboardManagerSwift: 41fd3a45a2cdb2a0e031af697708a95b865068a1
   JSQMessagesViewController: 39fed975e3c9f8eba7292071e29eeb541d105e66
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
   Mixpanel: ac92056ee35a961362513ba11049e67cffcaa1f1
-  OAuthSwift: 1ef042d4362e755e24a78f158d817245641a5d24
+  OAuthSwift: 8895267fbd6437a52aea26541572a617c7a8c7c1
   QRCode: a249ed747aeb0f4bf5f9c58b5b001b6b3bc80073
   SDWebImage: 35f9627a3e44b4f292a8a8ce6a531fa488239b91
+  SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
+  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   TwitterCore: 817eae3e291fa4125b47789e26a4f6f024115c1f
   TwitterKit: 8a383da8d9c21b0423716381ea8bbfce20622d91
+  UIActivityIndicator-for-SDWebImage: 7bf7ebbf0ed1747dedc0d6e949c4603a6d0f9e0c
   UICKeyChainStore: f1cbd42216a113f0165de1e733e62905b8823432
 
-PODFILE CHECKSUM: 56ce0527b4ae77c932f683eddd0e151964a5f726
+PODFILE CHECKSUM: a0be66a445c4c1fefe16b1422932fdf62b7bfb59
 
 COCOAPODS: 1.0.1

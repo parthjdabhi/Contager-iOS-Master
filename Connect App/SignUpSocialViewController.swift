@@ -13,6 +13,7 @@ import FBSDKLoginKit
 import FBSDKCoreKit
 import OAuthSwift
 
+
 class SignUpSocialViewController: UIViewController {
     
     @IBOutlet var facebook: UIButton!
@@ -41,6 +42,16 @@ class SignUpSocialViewController: UIViewController {
     var ref:FIRDatabaseReference!
     var user: FIRUser!
     
+    var oauthswiftInsta = OAuth2Swift(
+        consumerKey:    "830c6697c41a49e0b99a49816a7d573c",
+        consumerSecret: "fe6ed06f37bf47c59dff4e6f7d7f1281",
+        authorizeUrl:   "https://api.instagram.com/oauth/authorize",
+        //responseType:   "token",
+        // or
+        accessTokenUrl: "https://api.instagram.com/oauth/access_token",
+        responseType:   "code"
+    )
+    
     override func viewDidAppear(animated: Bool) {
         ref = FIRDatabase.database().reference()
         user = FIRAuth.auth()?.currentUser
@@ -50,8 +61,8 @@ class SignUpSocialViewController: UIViewController {
         return UIStatusBarStyle.LightContent
     }
     
-    @IBAction func facebookLogin(sender: AnyObject) {
-        
+    @IBAction func facebookLogin(sender: AnyObject)
+    {
         let manager = FBSDKLoginManager()
         CommonUtils.sharedUtils.showProgress(self.view, label: "Loading...")
         manager.logInWithReadPermissions(["public_profile", "email", "user_friends"], fromViewController: self) { (result, error) in
@@ -135,36 +146,36 @@ class SignUpSocialViewController: UIViewController {
         //5958fbe586c443b7946cdf3c2f7283ec
         
         //let callback_new = "http://www.parthjdabhi.com/oauth_callback"
-        //let callback_new1 = "http://oauthswift.herokuapp.com/callback/Snagged"
-        let callback_new1 = "http://oauthswift.herokuapp.com/callback/instagram"
-        let callback_old = "Snagged://oauth-callback"
+        let callback_new1 = "http://oauthswift.herokuapp.com/callback/Snagged"
+        //let callback_new1 = "http://oauthswift.herokuapp.com/callback/instagram"
+
+//        let callback_old = "Snagged://oauth-callback"
+//        let oauthswift1 = OAuth2Swift(
+//            //Old
+//            //consumerKey:    "af9350fa8abd45af978145b4c896359e",
+//            //consumerSecret: "632160631a534b808b2feb4389819acf",
+//            //New Parth
+//            consumerKey:    "cc78516e657b4c32ad4907bd8411d8e1",
+//            consumerSecret: "5958fbe586c443b7946cdf3c2f7283ec",
+//            authorizeUrl:   "https://api.instagram.com/oauth/authorize",
+//            // responseType:   "token"
+//            // or
+//            accessTokenUrl: "https://api.instagram.com/oauth/access_token",
+//            responseType:   "code"
+//        )
         
-        let oauthswift1 = OAuth2Swift(
-            //Old
-            //consumerKey:    "af9350fa8abd45af978145b4c896359e",
-            //consumerSecret: "632160631a534b808b2feb4389819acf",
-            //New Parth
-            consumerKey:    "cc78516e657b4c32ad4907bd8411d8e1",
-            consumerSecret: "5958fbe586c443b7946cdf3c2f7283ec",
-            authorizeUrl:   "https://api.instagram.com/oauth/authorize",
-            responseType:   "token"
-            // or
-            // accessTokenUrl: "https://api.instagram.com/oauth/access_token",
-            // responseType:   "code"
-        )
+        //https://www.instagram.com/oauth/authorize/?client_id=830c6697c41a49e0b99a49816a7d573c&redirect_uri=http://oauthswift.herokuapp.com/callback/instagram&response_type=token
+        //http://oauthswift.herokuapp.com/callback/instagram?test=data
+        //https://connectapp.wordpress.com
         
-        let oauthswift = OAuth2Swift(
-            consumerKey:    "cc78516e657b4c32ad4907bd8411d8e1",
-            consumerSecret: "5958fbe586c443b7946cdf3c2f7283ec",
-            authorizeUrl:   "https://api.instagram.com/oauth/authorize",
-            responseType:   "token"        )
+        
         CommonUtils.sharedUtils.showProgress(self.view, label: "Loading...")
         let state: String = generateStateWithLength(20) as String
-        oauthswift.authorizeWithCallbackURL( NSURL(string: callback_new1)!, scope: "likes+comments", state:state, success: {
+        oauthswiftInsta.authorizeWithCallbackURL( NSURL(string: callback_new1)!, scope: "likes+comments", state:state, success: {
                 credential, response, parameters in
-                let url :String = "https://api.instagram.com/v1/users/self/?access_token=\(oauthswift.client.credential.oauth_token)"
+                let url :String = "https://api.instagram.com/v1/users/self/?access_token=\(self.oauthswiftInsta.client.credential.oauth_token)"
                 let parameters :Dictionary = Dictionary<String, AnyObject>()
-                oauthswift.client.get(url, parameters: parameters,
+                self.oauthswiftInsta.client.get(url, parameters: parameters,
                     success: {
                         data, response in
                         let jsonDict: AnyObject! = try? NSJSONSerialization.JSONObjectWithData(data, options: [])
