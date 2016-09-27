@@ -130,16 +130,18 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
-    @IBAction func instagramLogin(sender: AnyObject) {
-        let oauthswift = OAuth2Swift(
-            consumerKey:    "af9350fa8abd45af978145b4c896359e",
-            consumerSecret: "632160631a534b808b2feb4389819acf",
+    @IBAction func instagramLogin(sender: AnyObject)
+    {
+        var oauthswift = OAuth2Swift(
+            consumerKey:    "830c6697c41a49e0b99a49816a7d573c",
+            consumerSecret: "fe6ed06f37bf47c59dff4e6f7d7f1281",
             authorizeUrl:   "https://api.instagram.com/oauth/authorize",
-            responseType:   "token"
+            //responseType:   "token",
             // or
-            // accessTokenUrl: "https://api.instagram.com/oauth/access_token",
-            // responseType:   "code"
+            accessTokenUrl: "https://api.instagram.com/oauth/access_token",
+            responseType:   "code"
         )
+        
         CommonUtils.sharedUtils.showProgress(self.view, label: "Loading...")
         let state: String = generateStateWithLength(20) as String
         oauthswift.authorizeWithCallbackURL( NSURL(string: "Snagged://oauth-callback")!, scope: "likes+comments", state:state, success: {
@@ -163,6 +165,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
                 print(error.localizedDescription)
         })
     }
+    
     @IBAction func linkedInLogin(sender: AnyObject) {
         let oauthswift = OAuth1Swift(
             consumerKey:    "781k8vbvg9p34i",
@@ -197,6 +200,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
                 print(error.localizedDescription)
         })
     }
+    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
