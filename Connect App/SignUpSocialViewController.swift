@@ -102,11 +102,10 @@ class SignUpSocialViewController: UIViewController {
                 })
             }
         }
-        
     }
     
-    @IBAction func twitterLogin(sender: AnyObject) {
-        
+    @IBAction func twitterLogin(sender: AnyObject)
+    {
         let manager = Twitter()
         CommonUtils.sharedUtils.showProgress(self.view, label: "Loading...")
         manager.logInWithViewController(self) { (session, error) in
@@ -137,7 +136,6 @@ class SignUpSocialViewController: UIViewController {
                 }
             }
         }
-        
     }
     
     @IBAction func instagramLogin(sender: AnyObject) {
@@ -149,7 +147,7 @@ class SignUpSocialViewController: UIViewController {
         let callback_new1 = "http://oauthswift.herokuapp.com/callback/Snagged"
         //let callback_new1 = "http://oauthswift.herokuapp.com/callback/instagram"
 
-//        let callback_old = "Snagged://oauth-callback"
+//        let callback_old = "Snagged://Snagged"
 //        let oauthswift1 = OAuth2Swift(
 //            //Old
 //            //consumerKey:    "af9350fa8abd45af978145b4c896359e",
@@ -210,7 +208,7 @@ class SignUpSocialViewController: UIViewController {
             accessTokenUrl:  "https://api.linkedin.com/uas/oauth/accessToken"
         )
         CommonUtils.sharedUtils.showProgress(self.view, label: "Loading...")
-        oauthswift.authorizeWithCallbackURL( NSURL(string: "oauth-swift://oauth-callback/linkedin")!, success: {
+        oauthswift.authorizeWithCallbackURL( NSURL(string: "Snagged://Snagged/linkedin")!, success: {
             credential, response, parameters in
                 oauthswift.client.get("https://api.linkedin.com/v1/people/~", parameters: [:],
                     success: {

@@ -144,7 +144,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         
         CommonUtils.sharedUtils.showProgress(self.view, label: "Loading...")
         let state: String = generateStateWithLength(20) as String
-        oauthswift.authorizeWithCallbackURL( NSURL(string: "Snagged://oauth-callback")!, scope: "likes+comments", state:state, success: {
+        oauthswift.authorizeWithCallbackURL( NSURL(string: "Snagged://Snagged")!, scope: "likes+comments", state:state, success: {
             credential, response, parameters in
             let url :String = "https://api.instagram.com/v1/users/self/?access_token=\(oauthswift.client.credential.oauth_token)"
             let parameters :Dictionary = Dictionary<String, AnyObject>()
@@ -175,7 +175,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
             accessTokenUrl:  "https://api.linkedin.com/uas/oauth/accessToken"
         )
         CommonUtils.sharedUtils.showProgress(self.view, label: "Loading...")
-        oauthswift.authorizeWithCallbackURL( NSURL(string: "oauth-swift://oauth-callback/linkedin")!, success: {
+        oauthswift.authorizeWithCallbackURL( NSURL(string: "Snagged://Snagged/linkedin")!, success: {
             credential, response, parameters in
             oauthswift.client.get("https://api.linkedin.com/v1/people/~", parameters: [:],
                 success: {
